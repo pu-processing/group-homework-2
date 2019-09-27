@@ -1,6 +1,6 @@
 import ddf.minim.*;
 Minim minim;//宣告
-AudioPlayer in,boom;//宣告
+AudioPlayer in,boom,right,wrong;//宣告
 float x,y,x_1,y_1,x_2,y_2;
 float boomH,boomX,boomY,boomR,boomSpeedX,boomSpeedY;
 int txtNum,pbNum;
@@ -69,11 +69,17 @@ void setup() {
   minim = new Minim(this);
   in = minim.loadFile("001.mp3");
   boom = minim.loadFile("boom.mp3");
-  //in.setVolume(0.5);
+  right = minim.loadFile("right.mp3");
+  wrong = minim.loadFile("Error-Buzzer.mp3");
+  in.setVolume(0.5);
   in.loop(); //音樂開啟
   //boom.setVolume(1);
   boom.loop();
   boom.pause();
+  right.loop();
+  right.pause();
+  wrong.loop();
+  wrong.pause();
 }
 
 void mousePressed() {
@@ -121,6 +127,8 @@ void draw() {
            score+=10;
            str1="正確";
            text(str1,width/2-textWidth(str1)/2,height/2);
+           right.rewind();
+           right.play();
            isBoom=false;
            life--;
            reSetPb();
@@ -129,6 +137,8 @@ void draw() {
            score-=5;
            str1="錯誤";
            text(str1,width/2-textWidth(str1)/2,height/2);
+           wrong.rewind();
+           wrong.play();
            isBoom=false;
          }
          break;
